@@ -1,13 +1,15 @@
 {
-  "name": "smb-website-boilerplate",
+  "name": "nocms",
   "type": "module",
   "version": "1.0.0",
-  "description": "A modern boilerplate for creating SMB websites with Astro, Tailwind CSS, and TypeScript",
+  "description": "No-CMS website builder for SMBs - HVAC, Plumbing, and more",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "launch": "node scripts/launch.js",
+    "validate": "node scripts/validate.js"
   },
   "dependencies": {
     "astro": "^5.1.0",
