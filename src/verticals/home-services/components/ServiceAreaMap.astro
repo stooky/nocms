@@ -1,0 +1,127 @@
+---
+/**
+ * ServiceAreaMap Component
+ *
+ * Displays service coverage area with city list.
+ * Important for local SEO and setting expectations.
+ *
+ * Usage:
+ *   <ServiceAreaMap cities={['Springfield', 'Decatur']} />
+ */
+
+interface Props {
+  cities: string[];
+  headline?: string;
+  description?: string;
+  radiusMiles?: number;
+  mapEmbedUrl?: string;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  cities,
+  headline = 'Areas We Serve',
+  description,
+  radiusMiles,
+  mapEmbedUrl,
+  ctaText = 'See All Service Areas',
+  ctaHref = '/service-areas',
+} = Astro.props;
+
+// Split cities into columns for display
+const midpoint = Math.ceil(cities.length / 2);
+const leftCities = cities.slice(0, midpoint);
+const rightCities = cities.slice(midpoint);
+---
+
+<section class="bg-gray-50 py-12 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
+      <!-- Map or Placeholder -->
+      <div class="order-2 lg:order-1">
+        {mapEmbedUrl ? (
+          <div class="aspect-video overflow-hidden rounded-xl">
+            <iframe
+              src={mapEmbedUrl}
+              class="h-full w-full"
+              style="border:0;"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        ) : (
+          <div class="aspect-video rounded-xl bg-gray-200 flex items-center justify-center">
+            <div class="text-center text-gray-400">
+              <svg class="mx-auto h-16 w-16" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z" />
+              </svg>
+              <p class="mt-2">Service Area Map</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Content -->
+      <div class="order-1 lg:order-2">
+        <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">{headline}</h2>
+
+        {description ? (
+          <p class="mt-4 text-gray-600">{description}</p>
+        ) : radiusMiles ? (
+          <p class="mt-4 text-gray-600">
+            We proudly serve customers within {radiusMiles} miles of our location,
+            including these communities:
+          </p>
+        ) : (
+          <p class="mt-4 text-gray-600">
+            We proudly serve these communities and surrounding areas:
+          </p>
+        )}
+
+        <!-- City Grid -->
+        <div class="mt-6 grid grid-cols-2 gap-x-8 gap-y-2">
+          <ul class="space-y-2">
+            {leftCities.map((city) => (
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">{city}</span>
+              </li>
+            ))}
+          </ul>
+          <ul class="space-y-2">
+            {rightCities.map((city) => (
+              <li class="flex items-center gap-2">
+                <svg class="h-4 w-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">{city}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-8">
+          <a
+            href={ctaHref}
+            class="inline-flex items-center text-primary-600 font-medium hover:text-primary-700"
+          >
+            {ctaText}
+            <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Not in our area? -->
+        <p class="mt-4 text-sm text-gray-500">
+          Don't see your city? <a href="/contact" class="text-primary-600 hover:underline">Contact us</a> - we may still be able to help!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

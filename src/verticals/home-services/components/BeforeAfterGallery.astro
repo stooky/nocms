@@ -1,0 +1,121 @@
+---
+/**
+ * BeforeAfterGallery Component
+ *
+ * Showcases project work with before/after comparisons.
+ * Builds trust by showing quality of work.
+ *
+ * Usage:
+ *   <BeforeAfterGallery projects={projects} />
+ */
+
+interface Project {
+  id: string;
+  title: string;
+  location?: string;
+  beforeImage: string;
+  afterImage: string;
+  description?: string;
+  category?: string;
+}
+
+interface Props {
+  projects: Project[];
+  headline?: string;
+  description?: string;
+  columns?: 2 | 3;
+  showCategory?: boolean;
+}
+
+const {
+  projects,
+  headline = 'Our Work',
+  description = 'See the quality of our installations and repairs.',
+  columns = 3,
+  showCategory = true,
+} = Astro.props;
+
+const gridCols = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+};
+---
+
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center">
+      <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">{headline}</h2>
+      {description && (
+        <p class="mt-2 text-gray-600">{description}</p>
+      )}
+    </div>
+
+    <div class={`mt-10 grid gap-6 ${gridCols[columns]}`}>
+      {projects.map((project) => (
+        <div class="group overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-gray-200">
+          <!-- Before/After Images -->
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <!-- Before Image (default) -->
+            <img
+              src={project.beforeImage}
+              alt={`Before: ${project.title}`}
+              class="absolute inset-0 h-full w-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+            />
+            <!-- After Image (on hover) -->
+            <img
+              src={project.afterImage}
+              alt={`After: ${project.title}`}
+              class="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            />
+
+            <!-- Before/After Labels -->
+            <div class="absolute bottom-0 left-0 right-0 flex justify-between p-2">
+              <span class="rounded bg-black/60 px-2 py-1 text-xs font-medium text-white transition-opacity group-hover:opacity-0">
+                Before
+              </span>
+              <span class="rounded bg-primary-600 px-2 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
+                After
+              </span>
+            </div>
+
+            <!-- Hover instruction -->
+            <div class="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/10">
+              <span class="rounded-full bg-white/90 px-3 py-1.5 text-sm font-medium text-gray-700 opacity-0 shadow transition-opacity group-hover:opacity-100">
+                Hover to see after
+              </span>
+            </div>
+          </div>
+
+          <!-- Project Info -->
+          <div class="p-4">
+            {showCategory && project.category && (
+              <span class="inline-flex rounded-full bg-primary-50 px-2.5 py-0.5 text-xs font-medium text-primary-700">
+                {project.category}
+              </span>
+            )}
+            <h3 class="mt-2 font-semibold text-gray-900">{project.title}</h3>
+            {project.location && (
+              <p class="text-sm text-gray-500">{project.location}</p>
+            )}
+            {project.description && (
+              <p class="mt-2 text-sm text-gray-600">{project.description}</p>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- View All Link -->
+    <div class="mt-10 text-center">
+      <a
+        href="/gallery"
+        class="inline-flex items-center text-primary-600 font-medium hover:text-primary-700"
+      >
+        View All Projects
+        <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>

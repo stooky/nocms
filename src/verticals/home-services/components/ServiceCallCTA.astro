@@ -1,0 +1,177 @@
+---
+/**
+ * ServiceCallCTA Component
+ *
+ * Primary conversion block with quick contact form and phone number.
+ * Designed for maximum conversions on service pages.
+ *
+ * Usage:
+ *   <ServiceCallCTA phone="(555) 123-4567" />
+ */
+
+interface Props {
+  headline?: string;
+  subheadline?: string;
+  phone: string;
+  formAction?: string;
+  variant?: 'default' | 'compact' | 'full';
+  background?: 'white' | 'gray' | 'primary';
+}
+
+const {
+  headline = 'Need Service Today?',
+  subheadline = "Fill out this quick form and we'll call you back within 15 minutes.",
+  phone,
+  formAction = '#',
+  variant = 'default',
+  background = 'gray',
+} = Astro.props;
+
+const phoneDigits = phone.replace(/\D/g, '');
+
+const bgClasses = {
+  white: 'bg-white',
+  gray: 'bg-gray-50',
+  primary: 'bg-primary-600',
+};
+
+const textClasses = {
+  white: 'text-gray-900',
+  gray: 'text-gray-900',
+  primary: 'text-white',
+};
+---
+
+<section class={`py-12 sm:py-16 ${bgClasses[background]}`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class={`mx-auto max-w-3xl text-center ${textClasses[background]}`}>
+      <h2 class="text-2xl font-bold sm:text-3xl">{headline}</h2>
+      {subheadline && (
+        <p class={`mt-2 ${background === 'primary' ? 'text-primary-100' : 'text-gray-600'}`}>
+          {subheadline}
+        </p>
+      )}
+    </div>
+
+    <div class="mx-auto mt-8 max-w-xl">
+      {variant === 'compact' ? (
+        <!-- Compact: Just phone + simple message -->
+        <div class="text-center">
+          <a
+            href={`tel:${phoneDigits}`}
+            class="inline-flex items-center gap-3 rounded-xl bg-primary-600 px-8 py-4 text-xl font-bold text-white shadow-lg transition-all hover:bg-primary-700 hover:shadow-xl"
+          >
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+            </svg>
+            <span>{phone}</span>
+          </a>
+          <p class="mt-4 text-sm text-gray-500">Available 24/7 for emergencies</p>
+        </div>
+      ) : (
+        <!-- Default/Full: Form + Phone -->
+        <div class="rounded-xl bg-white p-6 shadow-lg sm:p-8">
+          <form action={formAction} method="POST" class="space-y-4">
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label for="name" class="sr-only">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                  class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+              <div>
+                <label for="phone" class="sr-only">Phone Number</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Phone Number"
+                  required
+                  class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                />
+              </div>
+            </div>
+
+            {variant === 'full' && (
+              <>
+                <div>
+                  <label for="email" class="sr-only">Email (optional)</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Email (optional)"
+                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  />
+                </div>
+                <div>
+                  <label for="service" class="sr-only">Service Needed</label>
+                  <select
+                    id="service"
+                    name="service"
+                    class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  >
+                    <option value="">Select a Service</option>
+                    <option value="repair">Repair</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="installation">New Installation</option>
+                    <option value="emergency">Emergency Service</option>
+                    <option value="estimate">Free Estimate</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </>
+            )}
+
+            <div>
+              <label for="message" class="sr-only">How can we help?</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="3"
+                placeholder="Briefly describe your issue..."
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full rounded-lg bg-primary-600 py-4 text-lg font-bold text-white shadow-sm transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            >
+              Request Service
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="relative my-6">
+            <div class="absolute inset-0 flex items-center">
+              <div class="w-full border-t border-gray-200"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+              <span class="bg-white px-4 text-gray-500">or call us directly</span>
+            </div>
+          </div>
+
+          <!-- Phone CTA -->
+          <div class="text-center">
+            <a
+              href={`tel:${phoneDigits}`}
+              class="inline-flex items-center gap-2 text-xl font-bold text-primary-600 transition-colors hover:text-primary-700"
+            >
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+              </svg>
+              <span>{phone}</span>
+            </a>
+            <p class="mt-1 text-sm text-gray-500">Available 24/7</p>
+          </div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

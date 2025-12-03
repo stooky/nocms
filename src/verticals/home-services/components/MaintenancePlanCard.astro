@@ -1,0 +1,95 @@
+---
+/**
+ * MaintenancePlanCard Component
+ *
+ * Displays maintenance plan options for recurring revenue.
+ * Primary use: HVAC maintenance clubs.
+ *
+ * Usage:
+ *   <MaintenancePlanCard plan={plan} />
+ *   <MaintenancePlanCard plan={plan} featured />
+ */
+
+interface Plan {
+  id: string;
+  name: string;
+  price: string;
+  priceAnnual?: string;
+  features: string[];
+  featured?: boolean;
+}
+
+interface Props {
+  plan: Plan;
+  featured?: boolean;
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  plan,
+  featured = plan.featured ?? false,
+  ctaText = 'Join Now',
+  ctaHref = '/maintenance-plans',
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'relative rounded-2xl p-6 sm:p-8',
+    featured
+      ? 'border-2 border-primary-500 bg-white shadow-xl'
+      : 'border border-gray-200 bg-white shadow-sm',
+  ]}
+>
+  {featured && (
+    <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+      <span class="inline-flex rounded-full bg-primary-600 px-4 py-1 text-sm font-semibold text-white">
+        Most Popular
+      </span>
+    </div>
+  )}
+
+  <div class="text-center">
+    <h3 class="text-xl font-bold text-gray-900">{plan.name}</h3>
+    <div class="mt-4">
+      <span class="text-4xl font-bold text-gray-900">{plan.price}</span>
+    </div>
+    {plan.priceAnnual && (
+      <p class="mt-1 text-sm text-gray-500">
+        or {plan.priceAnnual} paid annually
+      </p>
+    )}
+  </div>
+
+  <ul class="mt-8 space-y-3">
+    {plan.features.map((feature) => (
+      <li class="flex items-start gap-3">
+        <svg
+          class="mt-0.5 h-5 w-5 flex-shrink-0 text-primary-600"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+        </svg>
+        <span class="text-gray-600">{feature}</span>
+      </li>
+    ))}
+  </ul>
+
+  <div class="mt-8">
+    <a
+      href={ctaHref}
+      class:list={[
+        'block w-full rounded-lg py-3 text-center font-semibold transition-colors',
+        featured
+          ? 'bg-primary-600 text-white hover:bg-primary-700'
+          : 'bg-gray-100 text-gray-900 hover:bg-gray-200',
+      ]}
+    >
+      {ctaText}
+    </a>
+  </div>
+</div>
