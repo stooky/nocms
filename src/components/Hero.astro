@@ -1,6 +1,8 @@
 ---
 interface Props {
+  eyebrow?: string;
   title: string;
+  titleHighlight?: string;
   subtitle?: string;
   primaryCta?: {
     text: string;
@@ -10,23 +12,33 @@ interface Props {
     text: string;
     href: string;
   };
+  image?: string;
+  imageAlt?: string;
+  logoCarousel?: string[];
   centered?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  background?: 'white' | 'gray' | 'dark' | 'gradient';
 }
 
 const {
+  eyebrow,
   title,
+  titleHighlight,
   subtitle,
   primaryCta,
   secondaryCta,
-  centered = true,
+  image,
+  imageAlt = "Hero image",
+  logoCarousel,
+  centered = false,
   size = 'lg',
+  background = 'white',
 } = Astro.props;
 
 const sizeClasses = {
   sm: 'py-16 sm:py-20',
   md: 'py-20 sm:py-28',
-  lg: 'py-24 sm:py-32',
+  lg: 'py-24 sm:py-32 lg:py-40',
 };
 
 const titleSizes = {
@@ -34,40 +46,101 @@ const titleSizes = {
   md: 'text-4xl sm:text-5xl',
   lg: 'text-4xl sm:text-5xl lg:text-6xl',
 };
+
+const backgroundClasses = {
+  white: 'bg-white',
+  gray: 'bg-gray-50',
+  dark: 'bg-secondary-900 text-white',
+  gradient: 'bg-gradient-to-br from-secondary-900 via-secondary-800 to-secondary-900 text-white',
+};
+
+const textColorClass = background === 'dark' || background === 'gradient' ? 'text-white' : 'text-gray-900';
+const subtextColorClass = background === 'dark' || background === 'gradient' ? 'text-gray-300' : 'text-gray-600';
 ---
 
-<section class={`bg-white ${sizeClasses[size]}`}>
-  <div class={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${centered ? 'text-center' : ''}`}>
-    <div class={centered ? 'mx-auto max-w-3xl' : 'max-w-2xl'}>
-      <h1 class={`font-bold tracking-tight text-gray-900 ${titleSizes[size]}`}>
-        {title}
-      </h1>
-      {subtitle && (
-        <p class="mt-6 text-lg leading-8 text-gray-600 sm:text-xl">
-          {subtitle}
-        </p>
-      )}
-      {(primaryCta || secondaryCta) && (
-        <div class={`mt-10 flex gap-4 ${centered ? 'justify-center' : ''}`}>
-          {primaryCta && (
-            <a
-              href={primaryCta.href}
-              class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3 text-base font-medium text-white shadow-sm transition-colors hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              {primaryCta.text}
-            </a>
+<section class={`relative overflow-hidden ${sizeClasses[size]} ${backgroundClasses[background]}`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class={`grid gap-12 ${image ? 'lg:grid-cols-2 lg:items-center' : ''} ${centered ? 'text-center' : ''}`}>
+      <!-- Content -->
+      <div class={centered && !image ? 'mx-auto max-w-3xl' : ''}>
+        {eyebrow && (
+          <p class="text-sm font-semibold uppercase tracking-wider text-primary-600 mb-4">
+            {eyebrow}
+          </p>
+        )}
+        <h1 class={`font-bold tracking-tight ${textColorClass} ${titleSizes[size]}`}>
+          {title}
+          {titleHighlight && (
+            <span class="text-primary-500"> {titleHighlight}</span>
           )}
-          {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              class="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-6 py-3 text-base font-medium text-gray-700 shadow-sm transition-colors hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-            >
-              {secondaryCta.text}
-            </a>
-          )}
+        </h1>
+        {subtitle && (
+          <p class={`mt-6 text-lg leading-8 sm:text-xl ${subtextColorClass}`}>
+            {subtitle}
+          </p>
+        )}
+        {(primaryCta || secondaryCta) && (
+          <div class={`mt-10 flex flex-wrap gap-4 ${centered ? 'justify-center' : ''}`}>
+            {primaryCta && (
+              <a
+                href={primaryCta.href}
+                class="inline-flex items-center justify-center rounded-lg bg-primary-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-primary-600/25 transition-all hover:bg-primary-700 hover:shadow-xl hover:shadow-primary-600/30 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              >
+                {primaryCta.text}
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                class={`inline-flex items-center justify-center rounded-lg border-2 px-6 py-3.5 text-base font-semibold transition-all focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
+                  background === 'dark' || background === 'gradient'
+                    ? 'border-white/30 text-white hover:bg-white/10'
+                    : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                {secondaryCta.text}
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+
+      <!-- Image -->
+      {image && (
+        <div class="relative lg:order-last">
+          <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+            <img
+              src={image}
+              alt={imageAlt}
+              class="w-full h-auto object-cover"
+              loading="eager"
+            />
+          </div>
+          <!-- Decorative elements -->
+          <div class="absolute -z-10 -top-4 -right-4 h-72 w-72 rounded-full bg-primary-500/10 blur-3xl"></div>
+          <div class="absolute -z-10 -bottom-4 -left-4 h-72 w-72 rounded-full bg-primary-600/10 blur-3xl"></div>
         </div>
       )}
     </div>
+
+    <!-- Logo Carousel -->
+    {logoCarousel && logoCarousel.length > 0 && (
+      <div class="mt-16 border-t border-gray-200/50 pt-12">
+        <p class={`text-center text-sm font-medium ${subtextColorClass} mb-8`}>
+          Trusted by leading studios and fitness centers
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+          {logoCarousel.map((logo) => (
+            <img
+              src={logo}
+              alt="Client logo"
+              class="h-8 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all"
+            />
+          ))}
+        </div>
+      </div>
+    )}
+
     <slot />
   </div>
 </section>

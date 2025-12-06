@@ -2,137 +2,300 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
 import Section from '../components/Section.astro';
-import FeatureGrid from '../components/FeatureGrid.astro';
-import Card from '../components/Card.astro';
-import Testimonial from '../components/Testimonial.astro';
+import IconBox from '../components/IconBox.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import TestimonialCarousel from '../components/TestimonialCarousel.astro';
+import FAQ from '../components/FAQ.astro';
+import TrustBadges from '../components/TrustBadges.astro';
 import CTA from '../components/CTA.astro';
 import { siteConfig } from '../config/site';
 
-// Define your features/services
+// Core features for membership studios
 const features = [
   {
-    title: 'Service One',
-    description: 'Brief description of your first service and how it helps customers achieve their goals.',
-    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>`,
+    title: 'Integrated Billing',
+    description: 'Automated payment processing with delinquency management that maximizes your cash flow and reduces admin time.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>`,
   },
   {
-    title: 'Service Two',
-    description: 'Brief description of your second service and the value it provides to your clients.',
-    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>`,
+    title: 'Member Management',
+    description: 'Track attendance, manage family accounts, monitor achievements, and keep member data organized in one place.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>`,
   },
   {
-    title: 'Service Three',
-    description: 'Brief description of your third service and what makes it stand out from competitors.',
-    icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" /></svg>`,
+    title: 'Scheduling & Booking',
+    description: 'Let members book classes online with integrated scheduling. Easy for members, easy for you.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
+  },
+  {
+    title: 'Lead Management',
+    description: 'Capture and nurture leads with automated follow-ups that convert prospects into paying members.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>`,
   },
 ];
 
-// Example testimonials
+// Member app features
+const memberAppFeatures = [
+  { title: 'Manage family accounts', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>` },
+  { title: 'Enroll/renew/upgrade a membership', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>` },
+  { title: 'Achievement tracking', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>` },
+  { title: 'Check-in', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>` },
+  { title: 'Make payments online', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" /></svg>` },
+  { title: 'Browse and buy gear & apparel', icon: `<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>` },
+];
+
+// Before/After comparison data
+const beforeItems = [
+  { text: 'Chasing down late payments manually' },
+  { text: 'Spreadsheets for tracking members' },
+  { text: 'Missed follow-ups with leads' },
+  { text: 'No visibility into business metrics' },
+  { text: 'Members calling to book classes' },
+];
+
+const afterItems = [
+  { text: 'Automated billing with delinquency management' },
+  { text: 'Centralized member database' },
+  { text: 'Automated lead nurturing sequences' },
+  { text: 'Real-time dashboards and reports' },
+  { text: 'Self-service online booking' },
+];
+
+// Testimonials
 const testimonials = [
   {
-    quote: "Working with this team has transformed our business. Their expertise and dedication are unmatched.",
-    author: "Jane Smith",
-    role: "CEO",
-    company: "Tech Corp",
+    quote: "Member Solutions has transformed how we run our martial arts school. The automated billing alone has saved us countless hours every month.",
+    author: "Michael Chen",
+    role: "Owner",
+    company: "Dragon's Way Martial Arts",
+    rating: 5,
   },
   {
-    quote: "Professional, responsive, and delivers results. Highly recommend their services to anyone.",
-    author: "John Doe",
-    role: "Marketing Director",
-    company: "Growth Inc",
+    quote: "The member management software is intuitive and powerful. Our staff picked it up quickly and our members love the mobile app.",
+    author: "Sarah Johnson",
+    role: "Studio Manager",
+    company: "FitLife Gym",
+    rating: 5,
   },
+  {
+    quote: "We've been with Member Solutions for over 10 years. Their support team is incredible and the software keeps getting better.",
+    author: "David Rodriguez",
+    role: "Owner",
+    company: "Elite MMA Academy",
+    rating: 5,
+  },
+  {
+    quote: "The lead management features helped us increase our conversion rate by 40%. The ROI has been incredible.",
+    author: "Jennifer Williams",
+    role: "Marketing Director",
+    company: "Zenith Yoga Studio",
+    rating: 5,
+  },
+];
+
+// FAQ data
+const faqs = [
+  {
+    question: "What types of businesses does Member Solutions work with?",
+    answer: "We specialize in membership-based businesses including martial arts schools, fitness centers, yoga studios, dance studios, and gyms. Our software and billing services are tailored to the unique needs of these industries.",
+  },
+  {
+    question: "How does the full-service billing work?",
+    answer: "Our team handles all aspects of your membership billing, from processing payments to managing delinquent accounts. We use proprietary technology combined with experienced billing specialists to maximize your collections and minimize your workload.",
+  },
+  {
+    question: "Can I import my existing member data?",
+    answer: "Yes! We provide full data migration support to ensure a smooth transition. Our team will help you import all your member information, payment history, and other important data.",
+  },
+  {
+    question: "Is there a mobile app for members?",
+    answer: "Absolutely. Members can manage their accounts, book classes, make payments, track achievements, and more through our mobile-friendly member portal and dedicated mobile app.",
+  },
+  {
+    question: "What kind of support do you offer?",
+    answer: "We provide dedicated support through phone, email, and our online knowledge base. Our team is based in the US and available during business hours to help you with any questions or issues.",
+  },
+];
+
+// Trust stats
+const trustStats = [
+  { value: "30+", label: "Years in Business" },
+  { value: "5,000+", label: "Studios Served" },
+  { value: "$2B+", label: "Payments Processed" },
+  { value: "98%", label: "Customer Satisfaction" },
 ];
 ---
 
-<Layout title="Home">
+<Layout title="Membership Management Software for Studios">
   <!-- Hero Section -->
   <Hero
-    title="Your Compelling Headline Goes Here"
-    subtitle="A clear, concise subheadline that explains your value proposition and what makes your business unique."
+    eyebrow="Membership Software for Studios"
+    title="Simplify Studio Management. Grow"
+    titleHighlight="Your Membership."
+    subtitle="Run your studio smarter with all-in-one membership management software. Handle lead tracking, scheduling, and billing seamlessly."
     primaryCta={{ text: "Get Started", href: "/contact" }}
-    secondaryCta={{ text: "Learn More", href: "/about" }}
+    secondaryCta={{ text: "See How It Works", href: "/membership-billing-services" }}
+    image="/images/dashboard-preview.svg"
+    imageAlt="Member Solutions Dashboard Preview"
   />
 
-  <!-- Features/Services Section -->
+  <!-- Features Section -->
   <Section
-    title="What We Offer"
-    subtitle="Everything you need to succeed, all in one place."
-    background="gray"
+    title="Everything You Need to Run Your Studio"
+    titleHighlight="Without the Headaches"
+    subtitle="Our all-in-one platform handles the business side so you can focus on your members."
+    background="white"
   >
-    <FeatureGrid features={features} columns={3} />
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {features.map((feature) => (
+        <IconBox
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          variant="card"
+        />
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <p class="text-lg text-gray-600 mb-4">Curious how it all connects?</p>
+      <a
+        href="/membership-billing-services"
+        class="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700"
+      >
+        See our full feature set
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
   </Section>
 
-  <!-- About Section -->
+  <!-- Before/After Section -->
+  <BeforeAfter
+    beforeTitle="Before Member Solutions"
+    afterTitle="After Member Solutions"
+    beforeItems={beforeItems}
+    afterItems={afterItems}
+  />
+
+  <!-- Marketing Services Section -->
   <Section
-    title="Why Choose Us"
-    subtitle="We're committed to delivering exceptional results for every client."
+    title="Managed Marketing Services To"
+    titleHighlight="Grow Your Business."
+    subtitle="Let our marketing experts handle your digital presence while you focus on your members."
+    background="white"
   >
-    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-center">
       <div>
-        <p class="text-lg text-gray-600">
-          With years of experience in the industry, we understand what it takes to help
-          businesses like yours succeed. Our team is dedicated to providing personalized
-          solutions that meet your unique needs.
-        </p>
-        <ul class="mt-8 space-y-4">
+        <ul class="space-y-4">
           <li class="flex items-start gap-3">
-            <svg class="mt-1 h-5 w-5 flex-shrink-0 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="text-gray-600">Experienced professionals dedicated to your success</span>
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Custom-built websites optimized for lead generation</span>
           </li>
           <li class="flex items-start gap-3">
-            <svg class="mt-1 h-5 w-5 flex-shrink-0 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="text-gray-600">Proven track record of delivering results</span>
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">SEO and local search optimization</span>
           </li>
           <li class="flex items-start gap-3">
-            <svg class="mt-1 h-5 w-5 flex-shrink-0 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="text-gray-600">Personalized approach tailored to your needs</span>
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Email marketing and automation workflows</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Done-for-you event marketing kits</span>
           </li>
         </ul>
         <div class="mt-8">
           <a
-            href="/about"
-            class="inline-flex items-center text-primary-600 font-medium hover:text-primary-700"
+            href="/websites-marketing-tools"
+            class="inline-flex items-center gap-2 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
           >
-            Learn more about us
-            <svg class="ml-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            Learn About Marketing Services
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
         </div>
       </div>
       <div class="relative">
-        <!-- Placeholder for image -->
-        <div class="aspect-video rounded-xl bg-gray-200 flex items-center justify-center">
-          <span class="text-gray-400">Image placeholder</span>
+        <div class="aspect-video rounded-xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+          <div class="text-center p-8">
+            <div class="w-16 h-16 mx-auto bg-primary-600 rounded-xl flex items-center justify-center mb-4">
+              <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p class="text-primary-800 font-medium">Marketing Dashboard</p>
+          </div>
         </div>
       </div>
     </div>
   </Section>
 
-  <!-- Testimonials Section -->
+  <!-- Member App Section -->
   <Section
-    title="What Our Clients Say"
-    subtitle="Don't just take our word for it."
+    title="All-in-One Member Access,"
+    titleHighlight="Anytime, Anywhere"
+    subtitle="Empower your members with self-service tools that delight."
     background="gray"
   >
-    <div class="grid gap-8 md:grid-cols-2">
-      {testimonials.map((testimonial) => (
-        <Testimonial {...testimonial} />
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {memberAppFeatures.map((feature) => (
+        <div class="flex items-center gap-4 bg-white p-5 rounded-xl border border-gray-100">
+          <div class="w-12 h-12 rounded-lg bg-primary-50 flex items-center justify-center text-primary-600 flex-shrink-0">
+            <Fragment set:html={feature.icon} />
+          </div>
+          <span class="text-gray-800 font-medium">{feature.title}</span>
+        </div>
       ))}
     </div>
   </Section>
 
+  <!-- Testimonials -->
+  <TestimonialCarousel
+    title="Our Customers Say"
+    titleHighlight="It Best"
+    testimonials={testimonials}
+    background="white"
+  />
+
+  <!-- FAQ Section -->
+  <FAQ
+    title="Frequently Asked Questions"
+    faqs={faqs}
+    background="gray"
+  />
+
+  <!-- Trust Badges -->
+  <TrustBadges
+    title="Trusted by membership businesses for 30+ years"
+    stats={trustStats}
+    background="white"
+  />
+
   <!-- CTA Section -->
   <CTA
-    title="Ready to Get Started?"
-    description="Contact us today to discuss how we can help your business grow."
-    primaryButton={{ text: "Contact Us", href: "/contact" }}
-    secondaryButton={{ text: "View Services", href: "/services" }}
+    title="Ready to Simplify Your Studio Management?"
+    description="Join thousands of successful studios using Member Solutions to grow their membership."
+    primaryButton={{ text: "Get Started Today", href: "/contact" }}
+    secondaryButton={{ text: "Schedule a Demo", href: "/request-info" }}
+    background="gradient"
   />
 </Layout>

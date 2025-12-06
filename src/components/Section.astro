@@ -1,15 +1,17 @@
 ---
 interface Props {
   title?: string;
+  titleHighlight?: string;
   subtitle?: string;
   centered?: boolean;
-  background?: 'white' | 'gray' | 'primary';
+  background?: 'white' | 'gray' | 'primary' | 'dark';
   padding?: 'sm' | 'md' | 'lg';
   id?: string;
 }
 
 const {
   title,
+  titleHighlight,
   subtitle,
   centered = true,
   background = 'white',
@@ -21,6 +23,7 @@ const bgClasses = {
   white: 'bg-white',
   gray: 'bg-gray-50',
   primary: 'bg-primary-600',
+  dark: 'bg-secondary-900',
 };
 
 const paddingClasses = {
@@ -29,17 +32,20 @@ const paddingClasses = {
   lg: 'py-20 sm:py-28',
 };
 
-const textColor = background === 'primary' ? 'text-white' : 'text-gray-900';
-const subtitleColor = background === 'primary' ? 'text-primary-100' : 'text-gray-600';
+const textColor = background === 'primary' || background === 'dark' ? 'text-white' : 'text-gray-900';
+const subtitleColor = background === 'primary' ? 'text-primary-100' : background === 'dark' ? 'text-gray-400' : 'text-gray-600';
 ---
 
 <section id={id} class={`${bgClasses[background]} ${paddingClasses[padding]}`}>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     {(title || subtitle) && (
-      <div class={`${centered ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'} mb-12 sm:mb-16`}>
+      <div class={`${centered ? 'mx-auto max-w-3xl text-center' : 'max-w-2xl'} mb-12 sm:mb-16`}>
         {title && (
           <h2 class={`text-3xl font-bold tracking-tight sm:text-4xl ${textColor}`}>
             {title}
+            {titleHighlight && (
+              <span class="text-primary-500"> {titleHighlight}</span>
+            )}
           </h2>
         )}
         {subtitle && (

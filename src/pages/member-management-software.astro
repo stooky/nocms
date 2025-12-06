@@ -1,0 +1,272 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import IconBox from '../components/IconBox.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import CTA from '../components/CTA.astro';
+
+// Core software features
+const coreFeatures = [
+  {
+    title: 'Member Database',
+    description: 'Store and manage all member information in one secure, centralized location.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
+  },
+  {
+    title: 'Family Accounts',
+    description: 'Link family members together for easy management and family billing options.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>`,
+  },
+  {
+    title: 'Attendance Tracking',
+    description: 'Monitor member check-ins and class attendance with detailed reporting.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>`,
+  },
+  {
+    title: 'Achievement Tracking',
+    description: 'Track belt ranks, certifications, and milestones for martial arts and fitness programs.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>`,
+  },
+  {
+    title: 'Notes & Communication',
+    description: 'Keep detailed notes on members and send targeted communications.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>`,
+  },
+  {
+    title: 'Reporting Dashboard',
+    description: 'Real-time insights into membership trends, revenue, and business performance.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`,
+  },
+];
+
+// Scheduling features
+const schedulingFeatures = [
+  'Online class booking for members',
+  'Automated waitlist management',
+  'Class capacity limits',
+  'Instructor scheduling',
+  'Calendar sync integration',
+  'Cancellation management',
+];
+
+// Lead management features
+const leadFeatures = [
+  'Lead capture forms',
+  'Automated follow-up sequences',
+  'Lead source tracking',
+  'Trial membership management',
+  'Conversion tracking',
+  'Pipeline reporting',
+];
+
+// App features
+const appFeatures = [
+  { title: 'View Schedule', description: 'See class schedules anytime' },
+  { title: 'Book Classes', description: 'Reserve spots instantly' },
+  { title: 'Check-In', description: 'Contactless check-in options' },
+  { title: 'Make Payments', description: 'Pay dues and purchases' },
+  { title: 'View Progress', description: 'Track achievements and goals' },
+  { title: 'Update Info', description: 'Manage account details' },
+];
+---
+
+<Layout title="Member Management Software">
+  <!-- Hero -->
+  <Hero
+    eyebrow="Member Management"
+    title="Member Management"
+    titleHighlight="Software"
+    subtitle="Everything you need to manage your members, schedule classes, and grow your studio in one powerful platform."
+    primaryCta={{ text: "Get Started", href: "/contact" }}
+    secondaryCta={{ text: "See Features", href: "#features" }}
+    background="white"
+  />
+
+  <!-- Core Features -->
+  <Section
+    id="features"
+    title="Core Features"
+    titleHighlight=""
+    subtitle="Powerful tools to manage every aspect of your membership business."
+    background="gray"
+  >
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {coreFeatures.map((feature) => (
+        <IconBox
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          variant="card"
+        />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Billing Integration -->
+  <Section
+    title="Integrated Billing System —"
+    titleHighlight="Proven to Work"
+    subtitle="Our software integrates seamlessly with Member Solutions full-service billing for a complete solution."
+    background="white"
+  >
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div class="relative">
+        <div class="aspect-video rounded-2xl bg-gradient-to-br from-secondary-900 to-secondary-800 flex items-center justify-center shadow-xl overflow-hidden">
+          <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoLTZ2LTZoNnptLTYgMHYtNmg2djZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
+          <div class="relative text-center p-8">
+            <div class="w-20 h-20 mx-auto bg-primary-600 rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
+            <p class="text-white font-medium">Billing Dashboard</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Automatic payment processing</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Delinquency management included</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Member billing history at your fingertips</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Easy plan upgrades and changes</span>
+          </li>
+        </ul>
+        <div class="mt-8">
+          <a
+            href="/membership-billing-services"
+            class="inline-flex items-center gap-2 text-primary-600 font-semibold hover:text-primary-700"
+          >
+            Learn about Full-Service Billing
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Scheduling -->
+  <Section
+    title="Scheduling & Booking."
+    titleHighlight="Easy for Members. Easy for You."
+    subtitle="Let members book classes online with our integrated scheduling system."
+    background="gray"
+  >
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {schedulingFeatures.map((feature) => (
+            <div class="flex items-center gap-3 bg-white p-4 rounded-lg border border-gray-100">
+              <div class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span class="text-gray-700 text-sm font-medium">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-square rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center">
+          <div class="text-center p-8">
+            <div class="w-20 h-20 mx-auto bg-primary-600 rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p class="text-primary-800 font-medium">Class Schedule</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Lead Management -->
+  <Section
+    title="Lead Follow-Up &"
+    titleHighlight="Management"
+    subtitle="Never miss a lead again with automated follow-ups and pipeline management."
+    background="white"
+  >
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {leadFeatures.map((feature) => (
+        <div class="flex items-center gap-3 bg-gray-50 p-4 rounded-lg">
+          <div class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <span class="text-gray-700 font-medium">{feature}</span>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Mobile App Section -->
+  <Section
+    title="Contactless Check-In with"
+    titleHighlight="Member App"
+    subtitle="Empower your members with a mobile app that puts everything at their fingertips."
+    background="gray"
+  >
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {appFeatures.map((feature) => (
+        <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900">{feature.title}</h3>
+          <p class="mt-2 text-gray-600">{feature.description}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Trust Section -->
+  <TrustBadges
+    title="Trusted by membership businesses for 30+ years"
+    stats={[
+      { value: "5,000+", label: "Studios Served" },
+      { value: "1M+", label: "Members Managed" },
+      { value: "98%", label: "Satisfaction Rate" },
+      { value: "24/7", label: "System Availability" },
+    ]}
+    background="white"
+  />
+
+  <!-- CTA -->
+  <CTA
+    title="Ready to Manage Your Members Better?"
+    description="See how Member Solutions can streamline your studio operations."
+    primaryButton={{ text: "Get Started", href: "/contact" }}
+    secondaryButton={{ text: "Schedule Demo", href: "/request-info" }}
+    background="gradient"
+  />
+</Layout>

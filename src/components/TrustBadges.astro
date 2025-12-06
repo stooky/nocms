@@ -1,0 +1,77 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  badges?: {
+    image: string;
+    alt: string;
+  }[];
+  stats?: {
+    value: string;
+    label: string;
+  }[];
+  background?: 'white' | 'gray' | 'dark';
+}
+
+const {
+  title = "Trusted by membership businesses for 30+ years",
+  subtitle,
+  badges = [],
+  stats = [],
+  background = 'gray',
+} = Astro.props;
+
+const bgClasses = {
+  white: 'bg-white',
+  gray: 'bg-gray-50',
+  dark: 'bg-secondary-900',
+};
+
+const textClass = background === 'dark' ? 'text-white' : 'text-gray-900';
+const subtextClass = background === 'dark' ? 'text-gray-400' : 'text-gray-600';
+---
+
+<section class={`py-12 sm:py-16 ${bgClasses[background]}`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {title && (
+      <p class={`text-center text-sm font-medium uppercase tracking-wider ${subtextClass} mb-8`}>
+        {title}
+      </p>
+    )}
+
+    {subtitle && (
+      <p class={`text-center text-lg ${subtextClass} mb-8`}>
+        {subtitle}
+      </p>
+    )}
+
+    <!-- Logo Badges -->
+    {badges.length > 0 && (
+      <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 mb-12">
+        {badges.map((badge) => (
+          <img
+            src={badge.image}
+            alt={badge.alt}
+            class={`h-10 w-auto ${background === 'dark' ? 'brightness-0 invert opacity-70 hover:opacity-100' : 'grayscale opacity-60 hover:grayscale-0 hover:opacity-100'} transition-all`}
+          />
+        ))}
+      </div>
+    )}
+
+    <!-- Stats -->
+    {stats.length > 0 && (
+      <div class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <div class="text-center">
+            <p class={`text-4xl font-bold ${background === 'dark' ? 'text-primary-400' : 'text-primary-600'}`}>
+              {stat.value}
+            </p>
+            <p class={`mt-2 text-sm font-medium ${subtextClass}`}>
+              {stat.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

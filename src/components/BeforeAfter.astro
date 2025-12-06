@@ -1,0 +1,90 @@
+---
+interface ListItem {
+  text: string;
+  positive?: boolean;
+}
+
+interface Props {
+  beforeTitle: string;
+  afterTitle: string;
+  beforeItems: ListItem[];
+  afterItems: ListItem[];
+  background?: 'white' | 'gray';
+}
+
+const {
+  beforeTitle,
+  afterTitle,
+  beforeItems,
+  afterItems,
+  background = 'gray',
+} = Astro.props;
+
+const bgClass = background === 'gray' ? 'bg-gray-50' : 'bg-white';
+---
+
+<section class={`py-16 sm:py-24 ${bgClass}`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Run Your Studio <span class="text-primary-600">Like a Pro</span>
+      </h2>
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-2">
+      <!-- Before Column -->
+      <div class="relative">
+        <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-200">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
+              <svg class="w-5 h-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900">{beforeTitle}</h3>
+          </div>
+          <ul class="space-y-4">
+            {beforeItems.map((item) => (
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span class="text-gray-600">{item.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <!-- Decorative arrow for desktop -->
+        <div class="hidden lg:block absolute -right-6 top-1/2 -translate-y-1/2 z-10">
+          <div class="w-12 h-12 rounded-full bg-primary-600 flex items-center justify-center shadow-lg">
+            <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- After Column -->
+      <div class="bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl p-8 shadow-xl">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-white">{afterTitle}</h3>
+        </div>
+        <ul class="space-y-4">
+          {afterItems.map((item) => (
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-white flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-white/90">{item.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

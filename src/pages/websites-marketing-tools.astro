@@ -1,0 +1,323 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import IconBox from '../components/IconBox.astro';
+import TrustBadges from '../components/TrustBadges.astro';
+import CTA from '../components/CTA.astro';
+
+// Website features
+const websiteFeatures = [
+  {
+    title: 'Custom Design',
+    description: 'Professional designs tailored to your brand and industry.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" /></svg>`,
+  },
+  {
+    title: 'Mobile Responsive',
+    description: 'Your website looks great on every device, from phones to desktops.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>`,
+  },
+  {
+    title: 'SEO Optimized',
+    description: 'Built with search engines in mind to help you get found online.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>`,
+  },
+  {
+    title: 'Lead Capture',
+    description: 'Integrated forms that capture leads and send them to your CRM.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>`,
+  },
+  {
+    title: 'Class Schedules',
+    description: 'Display your class schedules directly on your website.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
+  },
+  {
+    title: 'Easy Updates',
+    description: 'Simple content management so you can update your site anytime.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>`,
+  },
+];
+
+// Marketing features
+const marketingFeatures = [
+  {
+    title: 'Email Campaigns',
+    description: 'Send targeted email campaigns to your members and prospects.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
+  },
+  {
+    title: 'SMS Marketing',
+    description: 'Reach members instantly with text message campaigns.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>`,
+  },
+  {
+    title: 'Automated Follow-ups',
+    description: 'Set up automated sequences to nurture leads and retain members.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>`,
+  },
+  {
+    title: 'Social Media Integration',
+    description: 'Connect your website with your social media profiles.',
+    icon: `<svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" /></svg>`,
+  },
+];
+
+// Website packages
+const packages = [
+  {
+    name: 'Starter',
+    description: 'Perfect for new studios getting online',
+    features: [
+      '5-page responsive website',
+      'Mobile optimized',
+      'Contact form',
+      'Basic SEO setup',
+      'Google Maps integration',
+    ],
+  },
+  {
+    name: 'Professional',
+    description: 'Most popular for growing studios',
+    features: [
+      '10-page responsive website',
+      'Lead capture forms',
+      'Schedule integration',
+      'Blog setup',
+      'Advanced SEO',
+      'Social media integration',
+    ],
+    featured: true,
+  },
+  {
+    name: 'Enterprise',
+    description: 'Full-featured for established businesses',
+    features: [
+      'Unlimited pages',
+      'Custom design',
+      'Full CRM integration',
+      'Marketing automation',
+      'Priority support',
+      'Analytics dashboard',
+    ],
+  },
+];
+---
+
+<Layout title="Websites & Marketing Tools">
+  <!-- Hero -->
+  <Hero
+    eyebrow="Digital Presence"
+    title="Websites & Marketing Tools for"
+    titleHighlight="Membership Businesses"
+    subtitle="Professional websites and marketing tools designed specifically for martial arts schools, fitness studios, and gyms."
+    primaryCta={{ text: "Get Started", href: "/contact" }}
+    secondaryCta={{ text: "See Examples", href: "#packages" }}
+    background="white"
+  />
+
+  <!-- Website Features -->
+  <Section
+    title="Professional Websites"
+    titleHighlight="Built for Studios"
+    subtitle="Get a stunning website that converts visitors into members."
+    background="gray"
+  >
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {websiteFeatures.map((feature) => (
+        <IconBox
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          variant="card"
+        />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Website Demo -->
+  <Section
+    title="Stand Out From"
+    titleHighlight="The Competition"
+    subtitle="Your website is often the first impression potential members have of your studio."
+    background="white"
+  >
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Designed specifically for martial arts and fitness businesses</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Integration with Member Solutions software and billing</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Leads flow directly into your member management system</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+              <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-gray-700">Fast loading speeds for better user experience and SEO</span>
+          </li>
+        </ul>
+      </div>
+      <div class="relative">
+        <div class="aspect-video rounded-2xl bg-gradient-to-br from-secondary-900 to-secondary-800 flex items-center justify-center shadow-xl overflow-hidden">
+          <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djZoLTZ2LTZoNnptLTYgMHYtNmg2djZoLTZ6Ii8+PC9nPjwvZz48L3N2Zz4=')] opacity-50"></div>
+          <div class="relative text-center p-8">
+            <div class="w-20 h-20 mx-auto bg-primary-600 rounded-2xl flex items-center justify-center mb-4">
+              <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <p class="text-white font-medium">Website Preview</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Marketing Tools -->
+  <Section
+    title="Marketing Tools to"
+    titleHighlight="Grow Your Business"
+    subtitle="Reach more prospects and keep your members engaged."
+    background="gray"
+  >
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      {marketingFeatures.map((feature) => (
+        <IconBox
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          variant="centered"
+        />
+      ))}
+    </div>
+  </Section>
+
+  <!-- Packages -->
+  <Section
+    id="packages"
+    title="Website Packages"
+    titleHighlight=""
+    subtitle="Choose the right solution for your studio."
+    background="white"
+  >
+    <div class="grid gap-8 lg:grid-cols-3">
+      {packages.map((pkg) => (
+        <div class={`bg-white rounded-2xl p-8 border-2 ${pkg.featured ? 'border-primary-500 shadow-xl relative' : 'border-gray-100 shadow-lg'}`}>
+          {pkg.featured && (
+            <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+              <span class="bg-primary-600 text-white text-sm font-medium px-4 py-1 rounded-full">
+                Most Popular
+              </span>
+            </div>
+          )}
+          <h3 class="text-2xl font-bold text-gray-900">{pkg.name}</h3>
+          <p class="mt-2 text-gray-600">{pkg.description}</p>
+          <ul class="mt-6 space-y-3">
+            {pkg.features.map((feature) => (
+              <li class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-primary-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="text-gray-700">{feature}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-8">
+            <a
+              href="/contact"
+              class={`block text-center py-3 px-6 rounded-lg font-semibold transition-colors ${
+                pkg.featured
+                  ? 'bg-primary-600 text-white hover:bg-primary-700'
+                  : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
+              }`}
+            >
+              Get Started
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Integration Section -->
+  <Section
+    title="Works Seamlessly with"
+    titleHighlight="Member Solutions"
+    subtitle="Your website and marketing tools integrate directly with our billing and member management platform."
+    background="gray"
+  >
+    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900">Lead to Member</h3>
+        <p class="mt-2 text-gray-600">Website leads automatically flow into your member management system for follow-up.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900">Schedule Sync</h3>
+        <p class="mt-2 text-gray-600">Your class schedule updates automatically on your website when you make changes.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+        <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center mb-4">
+          <svg class="w-6 h-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900">Online Payments</h3>
+        <p class="mt-2 text-gray-600">Members can make payments directly through your website using secure processing.</p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Trust Section -->
+  <TrustBadges
+    title="Trusted by membership businesses for 30+ years"
+    stats={[
+      { value: "500+", label: "Websites Built" },
+      { value: "95%", label: "Client Satisfaction" },
+      { value: "24/7", label: "Website Uptime" },
+      { value: "30+", label: "Years Experience" },
+    ]}
+    background="dark"
+  />
+
+  <!-- CTA -->
+  <CTA
+    title="Ready to Upgrade Your Online Presence?"
+    description="Get a professional website that works as hard as you do."
+    primaryButton={{ text: "Get Started", href: "/contact" }}
+    secondaryButton={{ text: "Request Demo", href: "/request-info" }}
+    background="gradient"
+  />
+</Layout>

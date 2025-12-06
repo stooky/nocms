@@ -1,0 +1,92 @@
+---
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title?: string;
+  faqs: FAQItem[];
+  background?: 'white' | 'gray';
+  columns?: 1 | 2;
+}
+
+const {
+  title = "Frequently Asked Questions",
+  faqs,
+  background = 'white',
+  columns = 1,
+} = Astro.props;
+
+const bgClass = background === 'gray' ? 'bg-gray-50' : 'bg-white';
+---
+
+<section class={`py-16 sm:py-24 ${bgClass}`}>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    {title && (
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          {title}
+        </h2>
+      </div>
+    )}
+
+    <div class={`mx-auto ${columns === 1 ? 'max-w-3xl' : 'max-w-5xl'}`}>
+      <div class={`grid gap-4 ${columns === 2 ? 'lg:grid-cols-2' : ''}`}>
+        {faqs.map((faq, index) => (
+          <div class="faq-item border border-gray-200 rounded-xl overflow-hidden bg-white">
+            <button
+              class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 hover:bg-gray-50 transition-colors"
+              aria-expanded="false"
+              aria-controls={`faq-content-${index}`}
+            >
+              <span class="text-lg font-medium text-gray-900">{faq.question}</span>
+              <span class="faq-icon flex-shrink-0 w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center transition-transform">
+                <svg class="w-4 h-4 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </button>
+            <div
+              id={`faq-content-${index}`}
+              class="faq-content hidden px-6 pb-5"
+            >
+              <p class="text-gray-600 leading-relaxed">{faq.answer}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item) => {
+    const trigger = item.querySelector('.faq-trigger');
+    const content = item.querySelector('.faq-content');
+    const icon = item.querySelector('.faq-icon');
+
+    trigger?.addEventListener('click', () => {
+      const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close all other items
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          const otherTrigger = otherItem.querySelector('.faq-trigger');
+          const otherContent = otherItem.querySelector('.faq-content');
+          const otherIcon = otherItem.querySelector('.faq-icon');
+          otherTrigger?.setAttribute('aria-expanded', 'false');
+          otherContent?.classList.add('hidden');
+          otherIcon?.classList.remove('rotate-180');
+        }
+      });
+
+      // Toggle current item
+      trigger.setAttribute('aria-expanded', (!isExpanded).toString());
+      content?.classList.toggle('hidden');
+      icon?.classList.toggle('rotate-180');
+    });
+  });
+</script>
